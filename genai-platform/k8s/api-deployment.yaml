@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: arjunachari12/genai-api:1.0.0
+          image: abhimcho706/genai-api:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: APP_NAME
