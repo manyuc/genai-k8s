@@ -26,9 +26,9 @@ genai-platform/
 ```bash
 cd /home/arjun/genai-k8s/genai-platform
 
-docker build -t arjunachari12/genai-ui:1.0.0 ./ui
-docker build -t arjunachari12/genai-api:1.0.0 ./api
-docker build -t arjunachari12/genai-ollama:1.0.0 ./llm
+docker build -t abhimcho706/genai-ui:1.0.0 ./ui
+docker build -t abhimcho706/genai-api:1.0.0 ./api
+docker build -t abhimcho706/genai-ollama:1.0.0 ./llm
 ```
 
 ### 2. Push to Docker Hub
@@ -36,9 +36,9 @@ docker build -t arjunachari12/genai-ollama:1.0.0 ./llm
 ```bash
 docker login
 
-docker push arjunachari12/genai-ui:1.0.0
-docker push arjunachari12/genai-api:1.0.0
-docker push arjunachari12/genai-ollama:1.0.0
+docker push abhimcho706/genai-ui:1.0.0
+docker push abhimcho706/genai-api:1.0.0
+docker push abhimcho706/genai-ollama:1.0.0
 ```
 
 
