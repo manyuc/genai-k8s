@@ -15,7 +15,7 @@ APP_NAME = os.getenv("APP_NAME", "genai-api")
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 LLM_URL = os.getenv("LLM_URL", "http://llm:11434")
 MODEL_NAME = os.getenv("MODEL_NAME", "tinyllama")
-OLLAMA_TIMEOUT_SECONDS = float(os.getenv("OLLAMA_TIMEOUT_SECONDS", "120"))
+OLLAMA_TIMEOUT_SECONDS = float(os.getenv("OLLAMA_TIMEOUT_SECONDS", "300"))
 
 
 logging.basicConfig(
