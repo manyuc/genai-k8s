@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llm
+  namespace: genai
+  labels:
+    app: llm
+    tier: model
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: llm
+      tier: model
+  template:
+    metadata:
+      labels:
+        app: llm
+        tier: model
+    spec:
+      initContainers:
+        - name: inject-ca-cert
+          image: abhimcho706/genai-ollama:1.0.0
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              # Copy the entire system certs directory
+              cp -a /etc/ssl/certs/* /custom-certs/
+              # Append corporate CA to the main bundle
+              cat /certs/corporate-ca.pem >> /custom-certs/ca-certificates.crt
+              echo "Corporate CA certificate appended successfully."
+          volumeMounts:
+            - name: corporate-ca
+              mountPath: /certs
+            - name: custom-certs
+              mountPath: /custom-certs
+      containers:
+        - name: ollama
+          image: abhimcho706/genai-ollama:1.0.0
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh", "/entrypoint.sh"]
+          env:
+            - name: OLLAMA_MODEL
+              value: tinyllama
+            - name: OLLAMA_HOST
+              value: 0.0.0.0:11434
+          ports:
+            - containerPort: 11434
+              name: http
+          volumeMounts:
+            - name: ollama-models
+              mountPath: /root/.ollama
+            # Mount custom certs OVER the system certs directory
+            - name: custom-certs
+              mountPath: /etc/ssl/certs
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /api/tags
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /api/tags
+              port: http
+            initialDelaySeconds: 40
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: "3"
+              memory: 2Gi
+            limits:
+              cpu: "3"
+              memory: 4Gi
+      volumes:
+        - name: ollama-models
+          persistentVolumeClaim:
+            claimName: ollama-models-pvc
+        - name: corporate-ca
+          configMap:
+            name: corporate-ca
+        - name: custom-certs
+          emptyDir: {}
