@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: ollama
-          image: arjunachari12/genai-ollama:1.0.0
+          image: abhimcho706/genai-ollama:1.0.0
           imagePullPolicy: IfNotPresent
           command: ["/bin/sh", "/entrypoint.sh"]
           env:
