@@ -1,1 +1,11 @@
 genai-platform/local-mcp-ollama/ollama_data/
+
+# Private keys and certificate bundles
+**/id_rsa
+**/id_dsa
+**/id_ecdsa
+**/id_ed25519
+*.pem
+*.key
+*.p12
+*.pfx
