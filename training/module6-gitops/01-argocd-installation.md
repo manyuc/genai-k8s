@@ -20,7 +20,7 @@ kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
 ### 2. Install ArgoCD
 
 ```bash
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.10.0/manifests/install.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl wait --for=condition=Ready pod --all -n argocd --timeout=300s
 ```
 
